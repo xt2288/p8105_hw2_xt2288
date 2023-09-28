@@ -4,4 +4,38 @@ output: github_document
 date: "2023-09-28"
 ---
 
+```{r}
+library(tidyverse)
+```
+
+
+## Problem 1
+
+```{r}
+pols_df = 
+  read_csv("data/pols-month.csv") |>
+  janitor::clean_names() |>
+  separate(mon, into = c("year", "month","day")) |>
+  mutate(
+    month = case_match(
+      month,
+      "01" ~ "January",
+      "02" ~ "February",
+      "03" ~ "March",
+      "04" ~ "April",
+      "05" ~ "May",
+      "06" ~ "June",
+      "07" ~ "July",
+      "08" ~ "August",
+      "09" ~ "September",
+      "10" ~ "October",
+      "11" ~ "November",
+      "12" ~ "December"
+    ),
+    prez_gop = replace(prez_gop,prez_gop == "1", "gop"),
+    president = replace(prez_gop,prez_gop == "0", "dem")
+    ) |>
+  select( -prez_dem, -prez_gop, -day)
+
+```
 
