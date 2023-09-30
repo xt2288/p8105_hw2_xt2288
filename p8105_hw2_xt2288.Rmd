@@ -34,6 +34,7 @@ pols_df =
       "11" ~ "Nov",
       "12" ~ "Dec"
     ),
+    year = as.numeric(year),
     prez_dem = replace(prez_dem,prez_dem == "1", "dem"),
     president = replace(prez_dem,prez_dem == "0", "gop")
     ) |>
@@ -84,9 +85,19 @@ unemployment_df =
   pivot_longer(
     Jan:Dec,
     names_to = "month", 
-    values_to = "percentage")
+    values_to = "percentage") |>
+  janitor::clean_names()
+
 ```
 
+join the datasets
+
+```{r}
+combine_df = 
+  full_join(snp_df,pols_df)
+combine_df = 
+  full_join(combine_df, unemployment_df)
+```
 
 
 
