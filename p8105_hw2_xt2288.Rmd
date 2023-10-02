@@ -99,11 +99,10 @@ combine_df =
   full_join(combine_df, unemployment_df)
 ```
 
+The dataset `pols_df` has `r nrow(pols_df)` observations and `r nrow(pols_df)` variables. The range of years is from `r pols_df$year[1]` to `r pols_df$year[nrow(pols_df)]`. The data shows the president's political side andthe number of national politicians who are either democratic or republican at the time stated.
 
+The dataset `snp_df` has `r nrow(snp_df)` observations and `r nrow(snp_df)` variables. The range of years is from `r snp_df$year[1]` to `r snp_df$year[nrow(snp_df)]`. The data shows the closing values of the S&P stock index on the associated date.
 
-
-
-
-
+The dataset `unemployment_df` has `r nrow(unemployment_df)` observations and `r nrow(unemployment_df)` variables. The range of years is from `r snp_df$year[1]` to `r unemployment_df$year[nrow(unemployment_df)]`. The data shows the percentage of unemployment on the associated date.
 
 
