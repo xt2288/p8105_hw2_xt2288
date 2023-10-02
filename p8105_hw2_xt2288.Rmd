@@ -109,6 +109,8 @@ The dataset `unemployment_df` has `r nrow(unemployment_df)` observations and `r 
 
 ## Problem 2
 
+clean Mr.Trash Wheel sheet
+
 ```{r}
 trash_wheel_df =
   read_excel ("data/202207 Trash Wheel Collection Data.xlsx", 
@@ -122,7 +124,33 @@ trash_wheel_df =
   )
 ```
 
+clean Professor Trash Wheel sheet
 
+```{r}
+professor_trash_df =
+  read_excel ("data/202207 Trash Wheel Collection Data.xlsx", 
+              sheet = "Professor Trash Wheel") |>
+  janitor::clean_names() |>
+  head(-1) |>
+  mutate(
+    homes_powered = 
+      weight_tons * 500 / 30
+  )
+```
+
+clean Gwynnda Trash Wheel sheet
+
+```{r}
+gwynnda_trash_df =
+  read_excel ("data/202207 Trash Wheel Collection Data.xlsx", 
+              sheet = "Gwynnda Trash Wheel") |>
+  janitor::clean_names() |>
+  head(-2) |>
+  mutate(
+    homes_powered = 
+      weight_tons * 500 / 30
+  )
+```
 
 
 
