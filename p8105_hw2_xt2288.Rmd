@@ -120,7 +120,9 @@ trash_wheel_df =
   head(-1) |>
   mutate(
     homes_powered = 
-      weight_tons * 500 / 30
+      weight_tons * 500 / 30,
+    Trash_Wheel = "Mr. Trash Wheel",
+    year = as.numeric(year)
   )
 ```
 
@@ -134,7 +136,8 @@ professor_trash_df =
   head(-1) |>
   mutate(
     homes_powered = 
-      weight_tons * 500 / 30
+      weight_tons * 500 / 30,
+    Trash_Wheel = "Professor Trash Wheel"
   )
 ```
 
@@ -148,10 +151,17 @@ gwynnda_trash_df =
   head(-2) |>
   mutate(
     homes_powered = 
-      weight_tons * 500 / 30
+      weight_tons * 500 / 30,
+    Trash_Wheel = "Gwynnda Trash Wheel"
   )
 ```
 
+combine sheets
+
+```{r}
+trash_wheel_collection = 
+  bind_rows(trash_wheel_df, professor_trash_df, gwynnda_trash_df)
+```
 
 
 
