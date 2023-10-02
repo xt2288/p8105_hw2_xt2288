@@ -6,6 +6,7 @@ date: "2023-09-28"
 
 ```{r}
 library(tidyverse)
+library(readxl)
 ```
 
 
@@ -104,5 +105,37 @@ The dataset `pols_df` has `r nrow(pols_df)` observations and `r nrow(pols_df)` v
 The dataset `snp_df` has `r nrow(snp_df)` observations and `r nrow(snp_df)` variables. The range of years is from `r snp_df$year[1]` to `r snp_df$year[nrow(snp_df)]`. The data shows the closing values of the S&P stock index on the associated date.
 
 The dataset `unemployment_df` has `r nrow(unemployment_df)` observations and `r nrow(unemployment_df)` variables. The range of years is from `r snp_df$year[1]` to `r unemployment_df$year[nrow(unemployment_df)]`. The data shows the percentage of unemployment on the associated date.
+
+
+## Problem 2
+
+```{r}
+trash_wheel_df =
+  read_excel ("data/202207 Trash Wheel Collection Data.xlsx", 
+              sheet = "Mr. Trash Wheel") |>
+  select(-...15, -...16) |>
+  janitor::clean_names() |>
+  head(-1) |>
+  mutate(
+    homes_powered = 
+      weight_tons * 500 / 30
+  )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
