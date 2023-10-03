@@ -113,27 +113,27 @@ clean Mr.Trash Wheel sheet
 
 ```{r}
 trash_wheel_df =
-  read_excel ("data/202207 Trash Wheel Collection Data.xlsx", 
+  read_excel ("data/202309 Trash Wheel Collection Data.xlsx", 
               sheet = "Mr. Trash Wheel") |>
   select(-...15, -...16) |>
   janitor::clean_names() |>
-  head(-1) |>
   mutate(
     homes_powered = 
       weight_tons * 500 / 30,
     Trash_Wheel = "Mr. Trash Wheel",
     year = as.numeric(year)
-  )
+  ) |>
+  drop_na(dumpster)
 ```
 
 clean Professor Trash Wheel sheet
 
 ```{r}
 professor_trash_df =
-  read_excel ("data/202207 Trash Wheel Collection Data.xlsx", 
+  read_excel ("data/202309 Trash Wheel Collection Data.xlsx", 
               sheet = "Professor Trash Wheel") |>
   janitor::clean_names() |>
-  head(-1) |>
+  drop_na(dumpster) |>
   mutate(
     homes_powered = 
       weight_tons * 500 / 30,
@@ -145,10 +145,10 @@ clean Gwynnda Trash Wheel sheet
 
 ```{r}
 gwynnda_trash_df =
-  read_excel ("data/202207 Trash Wheel Collection Data.xlsx", 
+  read_excel ("data/202309 Trash Wheel Collection Data.xlsx", 
               sheet = "Gwynnda Trash Wheel") |>
   janitor::clean_names() |>
-  head(-2) |>
+  drop_na(dumpster) |>
   mutate(
     homes_powered = 
       weight_tons * 500 / 30,
@@ -195,7 +195,8 @@ mci_baseline_df =
 
 mci_baseline_mci_df = 
   mci_baseline_df |>
-  filter(age_at_onset != ".")
+  mutate(age_at_onset = as.numeric(age_at_onset)) |>
+  filter(current_age < age_at_onset | is.na(age_at_onset))
 ```
 
 In the import process of `mci_baseline_df`, the first line is skipped to make the second line as the header. Sex and apoe4 values are changed to character with explanation instead of numbers(factors). . The dataset has `r nrow(mci_baseline_df)` observations and `r ncol(mci_baseline_df)` variables. Each observation has an id number, age at the study baseline, sex, education, apoe4 carrier or not, and age at onset. Data for no MCI people is removed in `mci_baseline_mci_df`.
@@ -203,8 +204,36 @@ In the import process of `mci_baseline_df`, the first line is skipped to make th
 `r nrow(mci_baseline_df)` participants were recruited, of these, `r nrow(mci_baseline_mci_df)` develop MCI. The average baseline age is `r mean(mci_baseline_mci_df$current_age)`. The proportion of women in the study are APOE4 carriers is `r nrow(filter(mci_baseline_mci_df,sex == "Female" & apoe4 == "APOE4 carrier"))/nrow(filter(mci_baseline_mci_df,sex == "Female"))*100`%.
 
 
+clean mci biomarker
+
+```{r}
+mci_biomarker_df = 
+  read_csv("data/mci_amyloid.csv", skip = 1) |>
+  janitor::clean_names() |>
+  rename(id = study_id)
+```
+
+In the import process, the first line is skipped to make the second line as the header. The dataset has `r nrow(mci_biomarker_df)` observations and `r ncol(mci_biomarker_df)` variables.
+
+##the features of the dataset.
 
 
+```{r}
+anti_join(mci_baseline_mci_df, mci_biomarker_df, by = "id")
+```
+
+By using anti_join(), 8 observations appear in only the baseline or amyloid datasets.
+
+```{r}
+mci_combine_df = 
+  inner_join(mci_baseline_mci_df, mci_biomarker_df, by = "id")
+```
+
+The combined dataset has `r nrow(mci_combine_df)` observations and `r ncol(mci_combine_df)` variables.
+
+```{r}
+write_csv(mci_combine_df,"data/mci_combine_df.csv")
+```
 
 
 
