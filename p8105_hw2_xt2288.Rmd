@@ -215,9 +215,7 @@ mci_biomarker_df =
   rename(id = study_id)
 ```
 
-In the import process, the first line is skipped to make the second line as the header. The dataset has `r nrow(mci_biomarker_df)` observations and `r ncol(mci_biomarker_df)` variables.
-
-##the features of the dataset.
+In the import process, the first line is skipped to make the second line as the header. The dataset has `r nrow(mci_biomarker_df)` observations and `r ncol(mci_biomarker_df)` variables. There is some NA in the dateset indicates missing values.
 
 
 ```{r}
@@ -233,7 +231,7 @@ mci_combine_df =
   inner_join(mci_baseline_mci_df, mci_biomarker_df, by = "id")
 ```
 
-The combined dataset has `r nrow(mci_combine_df)` observations and `r ncol(mci_combine_df)` variables.
+The combined dataset has `r nrow(mci_combine_df)` observations and `r ncol(mci_combine_df)` variables. The variables include "id", "current_age", "sex", "education", "apoe4", "age_at_onset", "baseline", "time_2", "time_4", "time_6", "time_8" 
 
 ```{r}
 write_csv(mci_combine_df,"data/mci_combine_df.csv")
