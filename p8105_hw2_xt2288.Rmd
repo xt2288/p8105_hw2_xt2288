@@ -172,6 +172,33 @@ The dataset `gwynnda_trash_df` has `r nrow(gwynnda_trash_df)` observations and `
 The combined dataset `trash_wheel_collection` has `r nrow(trash_wheel_collection)` observations and `r ncol(trash_wheel_collection)` variables.
 
 
+## Problem 3
+
+clean mci baseline
+
+```{r}
+mci_baseline_df = 
+  read_csv("data/MCI_baseline.csv", skip = 1) |>
+  janitor::clean_names() |>
+  mutate(
+    sex = case_match(
+      sex,
+      0 ~ "Female",
+      1 ~ "Male"
+    ),
+    apoe4 = case_match(
+      apoe4,
+      0 ~ "APOE4 non-carrier",
+      1 ~ "APOE4 carrier"
+    )
+  ) |>
+  filter(age_at_onset != ".")
+```
+
+
+
+
+
 
 
 
