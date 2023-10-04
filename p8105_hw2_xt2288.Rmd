@@ -212,7 +212,13 @@ clean mci biomarker
 mci_biomarker_df = 
   read_csv("data/mci_amyloid.csv", skip = 1) |>
   janitor::clean_names() |>
-  rename(id = study_id)
+  rename(id = study_id,
+         time_0 = baseline) |>
+  pivot_longer(
+    time_0:time_8,
+    names_to = "year",
+    values_to = "value"
+  ) 
 ```
 
 In the import process, the first line is skipped to make the second line as the header. The dataset has `r nrow(mci_biomarker_df)` observations and `r ncol(mci_biomarker_df)` variables. There is some NA in the dateset indicates missing values.
