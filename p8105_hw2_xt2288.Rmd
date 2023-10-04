@@ -231,14 +231,14 @@ a = anti_join(mci_baseline_mci_df, mci_biomarker_df, by = "id")
 b = anti_join(mci_biomarker_df, mci_baseline_mci_df, by = "id")
 ```
 
-By using anti_join(), `r nrow(a)` observations appear in only the baseline dataset, and `r nrow(b)` observations appear in only the amyloid dataset.
+By using anti_join(), `r nrow(a)` observations appear in only the baseline dataset, and `r nrow(b)` observations with `r length(unique(b$id))` participants appear in only the amyloid dataset.
 
 ```{r}
 mci_combine_df = 
   inner_join(mci_baseline_mci_df, mci_biomarker_df, by = "id")
 ```
 
-The combined dataset has `r nrow(mci_combine_df)` observations and `r ncol(mci_combine_df)` variables. The variables include "id", "current_age", "sex", "education", "apoe4", "age_at_onset", "year", "value". 
+The combined dataset has `r nrow(mci_combine_df)` observations with `r length(unique(mci_combine_df$id))`participants and `r ncol(mci_combine_df)` variables. The variables include "id", "current_age", "sex", "education", "apoe4", "age_at_onset", "year", "value". 
 
 ```{r}
 write_csv(mci_combine_df,"data/mci_combine_df.csv")
