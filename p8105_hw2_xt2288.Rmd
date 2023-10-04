@@ -203,7 +203,7 @@ mci_baseline_mci_df =
 
 In the import process of `mci_baseline_df`, the first line is skipped to make the second line as the header. Sex and apoe4 values are changed to character with explanation instead of numbers(factors). . The dataset has `r nrow(mci_baseline_df)` observations and `r ncol(mci_baseline_df)` variables. Each observation has an id number, age at the study baseline, sex, education, apoe4 carrier or not, and age at onset. Data for no MCI people is removed in `mci_baseline_mci_df`.
 
-`r nrow(mci_baseline_df)` participants were recruited, of these, `r nrow(mci_baseline_mci_df)` develop MCI. The average baseline age is `r mean(mci_baseline_mci_df$current_age)`. The proportion of women in the study are APOE4 carriers is `r nrow(filter(mci_baseline_mci_df,sex == "Female" & apoe4 == "APOE4 carrier"))/nrow(filter(mci_baseline_mci_df,sex == "Female"))*100`%.
+`r nrow(mci_baseline_df)` participants were recruited, of these, `r nrow(mci_baseline_mci_df)` develop MCI. The average baseline age is `r mean(pull(mci_baseline_mci_df,current_age))`. The proportion of women in the study are APOE4 carriers is `r nrow(filter(mci_baseline_mci_df,sex == "Female" & apoe4 == "APOE4 carrier"))/nrow(filter(mci_baseline_mci_df,sex == "Female"))*100`%.
 
 
 clean mci biomarker
